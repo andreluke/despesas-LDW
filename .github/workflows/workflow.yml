@@ -1,4 +1,4 @@
-name: CI
+name: Continuous Integration
 
 on:
   push:
@@ -10,26 +10,53 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
 
+    services:
+      mongodb:
+        image: mongo:5.0
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_DATABASE: despesasLDW
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '16'
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Install dependencies
-      run: npm install
-      working-directory: backend
+      - name: Install dependencies
+        run: npm install
+        working-directory: backend
 
-    - name: Run tests
-      run: npm test
-      working-directory: backend
+      - name: Set up .env.dev file
+        run: |
+           echo "MONGO_URI_TEST=mongodb://localhost:27017/controle-despesas-test" >> .env.dev
+           echo "PORT=5000" >> .env.dev
+           echo "NODE_ENV=test" >> .env.dev
+        working-directory: backend
 
-    - name: Build project
-      run: npm run build
-      working-directory: backend
+      - name: Wait for MongoDB
+        run: |
+          until nc -z localhost 27017; do
+            echo "Waiting for MongoDB..."
+            sleep 2
+          done
+        working-directory: backend
+
+      - name: Build project
+        run: npm run build
+        working-directory: backend
+
+      - name: Run tests
+        run: npm test
+        working-directory: backend
