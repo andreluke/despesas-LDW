@@ -1,0 +1,176 @@
+/* Reseta margens e padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Corpo da página */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fc;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Container principal */
+.container {
+    max-width: 700px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Títulos */
+h1, h2, h3 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-top: 10px;
+}
+
+/* Formulário de despesas */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+form div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+form label {
+    flex: 1;
+    font-size: 1rem;
+    color: #555;
+}
+
+form input {
+    flex: 2;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: border 0.3s ease;
+}
+
+form input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Botão principal */
+button {
+    padding: 12px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Lista de despesas */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+li:hover {
+    background: #f1f1f1;
+}
+
+/* Ações de editar e excluir */
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+li button {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+li button.edit {
+    color: #007bff;
+}
+
+li button.edit:hover {
+    color: #0056b3;
+}
+
+li button.delete {
+    color: #e74c3c;
+}
+
+li button.delete:hover {
+    color: #c0392b;
+}
+
+/* Total de despesas */
+.total {
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    text-align: center;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.total span {
+    font-weight: bold;
+    color: #007bff;
+}
+
+/* Efeito responsivo */
+@media (max-width: 600px) {
+    form div {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    form input {
+        width: 100%;
+    }
+
+    li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .actions {
+        margin-top: 10px;
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
