@@ -40,6 +40,16 @@ expenseForm.addEventListener('submit', async (e) => {
     const amount = parseFloat(document.getElementById('amount').value);
     const date = document.getElementById('date').value;
 
+    // Verificar se a data é válida e não é futura
+    const expenseDate = new Date(date);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Ignorar a hora para comparar apenas a data
+
+    if (isNaN(expenseDate.getTime()) || expenseDate > today) {
+        alert('Por favor, insira uma data válida que não seja futura.');
+        return;
+    }
+
     const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -63,6 +73,16 @@ async function editExpense(id) {
     // Converter data do formato dd/mm/yyyy para ISO (yyyy-mm-dd)
     const [day, month, year] = date.split('/');
     const isoDate = `${year}-${month}-${day}`;
+
+    // Verificar se a data é válida e não é futura
+    const expenseDate = new Date(isoDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Ignorar a hora para comparar apenas a data
+
+    if (isNaN(expenseDate.getTime()) || expenseDate > today) {
+        alert('Por favor, insira uma data válida que não seja futura.');
+        return;
+    }
 
     const response = await fetch(`${apiUrl}/${id}`, {
         method: 'PUT',
